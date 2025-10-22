@@ -27,5 +27,22 @@ public:
         return transactionID + " | $" + to_string(amount) + " | " + status + " | " + timestamp;
     }
 };
+class PaymentGateway {
+private:
+    vector<Transaction> transactions;
+    int transactionCounter;
+
+    string generateID() {
+        transactionCounter++;
+        return "TXN" + to_string(1000 + transactionCounter);
+    }
+    bool validateAmount(double amount) {
+        if (amount <= 0) {
+            cout << "Error: Amount must be greater than 0." << endl;
+            return false;
+        }
+        return true;
+    }
+
 
 
