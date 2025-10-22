@@ -43,6 +43,42 @@ private:
         }
         return true;
     }
+public:
+    PaymentGateway() : transactionCounter(0) {}
 
+    void processPayment(double amount) {
+        if (!validateAmount(amount)) return;
+
+        string id = generateID();
+        string status = "SUCCESS";
+
+        // Simulating  random failure
+        if (rand() % 10 == 0) { // 10% chance to fail
+            status = "FAILED";
+        }
+
+        Transaction t(id, amount, status);
+        transactions.push_back(t);
+
+        // Saving  to file
+        ofstream file("transactions.txt", ios::app);
+        if (file.is_open()) {
+            file << t.toString() << endl;
+            file.close();
+        } else {
+            cout << "Error: Could not write to file!" << endl;
+        }
+
+        cout << "Transaction " << status << "! ID: " << id << endl;
+    }
+
+    void showAllTransactions() {
+        cout << "\n--- Transaction Records ---\n";
+        for (const auto& t : transactions) {
+            cout << t.toString() << endl;
+        }
+        cout << "---------------------------\n";
+    }
+};
 
 
