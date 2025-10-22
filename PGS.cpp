@@ -80,5 +80,37 @@ public:
         cout << "---------------------------\n";
     }
 };
+int main() {
+    srand(time(0)); //Random Generator 
+    PaymentGateway gateway;
 
+    int choice;
+    do {
+        cout << "\n1. Make Payment\n2. Show Transactions\n3. Exit\nEnter choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            double amount;
+            cout << "Enter payment amount: $";
+            cin >> amount;
+            
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input! Try again." << endl;
+                continue;
+            }
+
+            gateway.processPayment(amount);
+        } else if (choice == 2) {
+            gateway.showAllTransactions();
+        } else if (choice == 3) {
+            cout << "Exiting..." << endl;
+        } else {
+            cout << "Invalid choice! Try again." << endl;
+        }
+    } while (choice != 3);
+
+    return 0;
+}
 
